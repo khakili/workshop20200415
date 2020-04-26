@@ -71,6 +71,3 @@ UPDATE
 SET
     : S E T
     ;
-SELECT
-    : S E L E C T
-    ;

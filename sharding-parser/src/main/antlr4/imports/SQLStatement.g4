@@ -15,7 +15,7 @@ insert
     : INSERT INTO? tableName columnNames? VALUES assignmentValues
     ;
 update
-    : UPDATE tableName SET updateField+ WHERE whereCondition
+    : UPDATE tableName SET updateField WHERE whereCondition
     ;
 delete
     : DELETE FROM tableName WHERE whereCondition
@@ -45,7 +45,7 @@ tableName
     : identifier
     ;
 updateField
-    : columnName equal columnValue(COMMA_ columnName equal columnValue)*
+    : columnName equal columnValue (COMMA_ columnName equal columnValue)*
     ;
 whereCondition
     : columnName equal columnValue(COMMA_ columnName equal columnValue)*
