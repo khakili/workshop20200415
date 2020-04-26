@@ -17,7 +17,9 @@
 
 package shardingsphere.workshop.parser.engine;
 
+import org.junit.Assert;
 import org.junit.Test;
+import shardingsphere.workshop.parser.statement.statement.InsertStatement;
 import shardingsphere.workshop.parser.statement.statement.UseStatement;
 
 import static org.hamcrest.Matchers.is;
@@ -30,5 +32,13 @@ public final class ParseEngineTest {
         String sql = "use sharding_db";
         UseStatement useStatement = (UseStatement) ParseEngine.parse(sql);
         assertThat(useStatement.getSchemeName().getIdentifier().getValue(), is("sharding_db"));
+    }
+    @Test
+    public void testInsert(){
+        String sql = "INSERT INTO runoob_tbl (runoob_title, runoob_author) VALUES (\"学习 PHP\", \"菜鸟教程\")";
+        InsertStatement insertStatement = (InsertStatement)ParseEngine.parseInsert(sql);
+        Assert.assertEquals(insertStatement.getTableNameSegment().getTableName().getValue(),"runoob_tbl");
+        Assert.assertEquals(insertStatement.getAssignmentValuesSegment().getAssignmentValueSegments().size(),2);
+        Assert.assertEquals(insertStatement.getColumnNamesSegment().getColumnNameSegments().size(),2);
     }
 }
