@@ -19,8 +19,12 @@ package shardingsphere.workshop.parser.engine;
 
 import org.junit.Assert;
 import org.junit.Test;
+import shardingsphere.workshop.parser.statement.segment.IdentifierSegment;
 import shardingsphere.workshop.parser.statement.statement.InsertStatement;
+import shardingsphere.workshop.parser.statement.statement.UpdateStatement;
 import shardingsphere.workshop.parser.statement.statement.UseStatement;
+
+import java.util.Map;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.*;
@@ -41,4 +45,22 @@ public final class ParseEngineTest {
         Assert.assertEquals(insertStatement.getAssignmentValuesSegment().getAssignmentValueSegments().size(),2);
         Assert.assertEquals(insertStatement.getColumnNamesSegment().getColumnNameSegments().size(),2);
     }
+
+    @Test
+    public void testUpdate(){
+        String sql = "UPDATE runoob_tbl SET runoob_title='学习 C++' WHERE runoob_id=3;";
+        UpdateStatement updateStatement = (UpdateStatement)ParseEngine.parseUpdate(sql);
+        Assert.assertEquals(updateStatement.getTableNameSegment().getTableName().getValue(),"runoob_tbl");
+        Assert.assertEquals(updateStatement.getUpdateFieldSegment().getIdentifierSegmentIdentifierSegmentMap().get(new IdentifierSegment("runoob_title")).getValue(),"'学习 C++'");
+        Assert.assertEquals(updateStatement.getWhereConditionSegment().getIdentifierSegmentIdentifierSegmentMap().get(new IdentifierSegment("runoob_id")).getValue(),"3");
+    }
+
+    @Test
+    public void testIdentifierSegmentEqual(){
+       IdentifierSegment identifierSegment =  new IdentifierSegment("runoob_title");
+       IdentifierSegment identifierSegment1 = new IdentifierSegment("runoob_title");
+       Assert.assertEquals(identifierSegment,identifierSegment1);
+    }
+
+
 }
