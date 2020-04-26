@@ -6,6 +6,7 @@ import lombok.NoArgsConstructor;
 import org.antlr.v4.runtime.tree.ErrorNode;
 import org.antlr.v4.runtime.tree.ParseTree;
 import shardingsphere.workshop.parser.engine.parser.SQLParser;
+import shardingsphere.workshop.parser.engine.visitor.InsertSqlVisitor;
 import shardingsphere.workshop.parser.exception.SQLParsingException;
 import shardingsphere.workshop.parser.statement.ASTNode;
 import shardingsphere.workshop.parser.engine.visitor.SQLVisitor;
@@ -26,6 +27,11 @@ public final class ParseEngine {
     public static ASTNode parse(final String sql) {
         ParseTree parseTree = createParseTree(sql);
         return new SQLVisitor().visit(parseTree.getChild(0));
+    }
+
+    public static ASTNode parseInsert(final String sql){
+        ParseTree parseTree = createParseTree(sql);
+        return new InsertSqlVisitor().visit(parseTree.getChild(0));
     }
     
     private static ParseTree createParseTree(final String sql) {
