@@ -65,3 +65,12 @@ BETWEEN
 IN
     : I N
     ;
+UPDATE
+    : U P D A T E
+    ;
+SET
+    : S E T
+    ;
+SELECT
+    : S E L E C T
+    ;
