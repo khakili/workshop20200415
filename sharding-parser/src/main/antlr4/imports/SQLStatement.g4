@@ -21,7 +21,7 @@ delete
     : DELETE FROM tableName WHERE whereCondition
     ;
 select
-    : SELECT ((columnNames)?|(ASTERISK_)?) FROM tableName WHERE whereCondition
+    : SELECT columnName(COMMA_ columnName)* FROM tableName WHERE whereCondition
     ;
 assignmentValues
     : LP_ assignmentValue (COMMA_ assignmentValue)* RP_
@@ -54,6 +54,6 @@ equal
     : EQ_
     ;
 identifier
-    : IDENTIFIER_ | STRING_ | NUMBER_
+    : IDENTIFIER_ | STRING_ | NUMBER_| ASTERISK_
     ;
     

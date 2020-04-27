@@ -21,6 +21,7 @@ import org.junit.Assert;
 import org.junit.Test;
 import shardingsphere.workshop.parser.statement.segment.IdentifierSegment;
 import shardingsphere.workshop.parser.statement.statement.InsertStatement;
+import shardingsphere.workshop.parser.statement.statement.SelectStatment;
 import shardingsphere.workshop.parser.statement.statement.UpdateStatement;
 import shardingsphere.workshop.parser.statement.statement.UseStatement;
 
@@ -62,5 +63,31 @@ public final class ParseEngineTest {
        Assert.assertEquals(identifierSegment,identifierSegment1);
     }
 
+    @Test
+    public void testSelectAll(){
+        String sql = "select * from student where id=1";
+        SelectStatment selectStatment = (SelectStatment)ParseEngine.parseSelect(sql);
+        Assert.assertEquals(selectStatment.getColumnNameSegments().get(0).getColumnName().getValue(),"*");
+        Assert.assertEquals(selectStatment.getTableNameSegment().getTableName().getValue(),"student");
+        Assert.assertEquals(selectStatment.getWhereConditionSegment().getIdentifierSegmentIdentifierSegmentMap().get(new IdentifierSegment("id")).getValue(),"1");
+    }
+    @Test
+    public void testSelectColumn(){
+        String sql = "select name from student where id=1";
+        SelectStatment selectStatment = (SelectStatment)ParseEngine.parseSelect(sql);
+        Assert.assertEquals(selectStatment.getColumnNameSegments().get(0).getColumnName().getValue(),"name");
+        Assert.assertEquals(selectStatment.getTableNameSegment().getTableName().getValue(),"student");
+        Assert.assertEquals(selectStatment.getWhereConditionSegment().getIdentifierSegmentIdentifierSegmentMap().get(new IdentifierSegment("id")).getValue(),"1");
 
+    }
+    @Test
+    public void testSelectTwoColumn(){
+        String sql = "select name,address from student where id=1";
+        SelectStatment selectStatment = (SelectStatment)ParseEngine.parseSelect(sql);
+        Assert.assertEquals(selectStatment.getColumnNameSegments().get(0).getColumnName().getValue(),"name");
+        Assert.assertEquals(selectStatment.getColumnNameSegments().get(1).getColumnName().getValue(),"address");
+        Assert.assertEquals(selectStatment.getTableNameSegment().getTableName().getValue(),"student");
+        Assert.assertEquals(selectStatment.getWhereConditionSegment().getIdentifierSegmentIdentifierSegmentMap().get(new IdentifierSegment("id")).getValue(),"1");
+
+    }
 }
