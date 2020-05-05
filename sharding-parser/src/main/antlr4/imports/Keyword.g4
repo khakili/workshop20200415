@@ -71,3 +71,6 @@ UPDATE
 SET
     : S E T
     ;
+DELETE
+    : D E L E T E
+    ;

@@ -20,10 +20,7 @@ package shardingsphere.workshop.parser.engine;
 import org.junit.Assert;
 import org.junit.Test;
 import shardingsphere.workshop.parser.statement.segment.IdentifierSegment;
-import shardingsphere.workshop.parser.statement.statement.InsertStatement;
-import shardingsphere.workshop.parser.statement.statement.SelectStatment;
-import shardingsphere.workshop.parser.statement.statement.UpdateStatement;
-import shardingsphere.workshop.parser.statement.statement.UseStatement;
+import shardingsphere.workshop.parser.statement.statement.*;
 
 import java.util.Map;
 
@@ -89,5 +86,12 @@ public final class ParseEngineTest {
         Assert.assertEquals(selectStatment.getTableNameSegment().getTableName().getValue(),"student");
         Assert.assertEquals(selectStatment.getWhereConditionSegment().getIdentifierSegmentIdentifierSegmentMap().get(new IdentifierSegment("id")).getValue(),"1");
 
+    }
+
+    @Test
+    public void delete(){
+        String sql = "delete from a where id=1;";
+        DeleteStatment deleteStatment = (DeleteStatment) ParseEngine.parseDelete(sql);
+        Assert.assertEquals(deleteStatment.getTableNameSegment().getTableName().getValue(),"a");
     }
 }
